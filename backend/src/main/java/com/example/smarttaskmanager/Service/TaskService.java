@@ -14,13 +14,13 @@ public class TaskService {
     private TaskRepository taskRepository;
 
     public Task createTask(String userName, Task task){
-        task.setUserName(userName);
+        task.getUser().setUserName(userName);
         return taskRepository.save(task);
     }
 
     public Task findTaskById(Long id, String userName){
         return taskRepository.findById(id).map(task -> {
-            if(task.getUserName().equals(userName)){
+            if(task.getUser().getUserName().equals(userName)){
                 return task;
             }
             return null;
@@ -33,10 +33,10 @@ public class TaskService {
 
     public Task updateTask(Long id, String userName, Task taskMod){
         return taskRepository.findById(id).map(task -> {
-            if(task.getUserName().equals(userName)){
+            if(task.getUser().getUserName().equals(userName)){
                 task.setName(taskMod.getName());
                 task.setDescription(taskMod.getDescription());
-                task.setCategoryId(taskMod.getCategoryId());
+                task.getCategory().setId(taskMod.getCategory().getId());
             }
             return taskRepository.save(task);
         }).orElse(null);
@@ -44,7 +44,7 @@ public class TaskService {
 
     public boolean deleteTask(Long id, String userName){
         return taskRepository.findById(id).map(task -> {
-            if(task.getUserName().equals(userName)){
+            if(task.getUser().getUserName().equals(userName)){
                 taskRepository.deleteById(id);
                 return true;
             }

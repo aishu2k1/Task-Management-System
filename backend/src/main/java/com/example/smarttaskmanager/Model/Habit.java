@@ -27,7 +27,9 @@ public class Habit {
     private Date endTime;
 
     //foreign key to user
-    private String userName;
+    @ManyToOne
+    @JoinColumn(name = "userName", referencedColumnName = "userName")
+    private User user;
 
     public Long getId() {
         return id;
@@ -53,8 +55,8 @@ public class Habit {
         return endTime;
     }
 
-    public String getUserName() {
-        return userName;
+    public User getUser() {
+        return user;
     }
 
     public void setId(Long id) {
@@ -81,7 +83,7 @@ public class Habit {
         this.createdDate = createdDate;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

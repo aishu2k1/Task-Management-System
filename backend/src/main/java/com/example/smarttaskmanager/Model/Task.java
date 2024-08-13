@@ -17,7 +17,7 @@ public class Task {
     //foreign key to category
     @OneToOne
     @JoinColumn(name = "categoryId", referencedColumnName = "categoryId")
-    private Long categoryId;
+    private Category category;
 
     //foreign key to user
     @ManyToOne
@@ -36,8 +36,8 @@ public class Task {
         return description;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
     public User getUser() {
@@ -56,8 +56,8 @@ public class Task {
         this.description = description;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public void setUser(User user) {

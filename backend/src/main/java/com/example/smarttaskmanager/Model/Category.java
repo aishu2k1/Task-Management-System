@@ -16,7 +16,7 @@ public class Category {
     //foreign key to user
     @ManyToOne
     @JoinColumn(name = "userName", referencedColumnName = "userName")
-    private String userName;
+    private User user;
 
     public String getName() {
         return name;
@@ -26,8 +26,8 @@ public class Category {
         return id;
     }
 
-    public String getUserName() {
-        return userName;
+    public User getUser() {
+        return user;
     }
 
     public void setId(Long id) {
@@ -38,7 +38,7 @@ public class Category {
         this.name = name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

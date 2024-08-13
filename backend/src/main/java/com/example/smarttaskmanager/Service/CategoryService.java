@@ -20,7 +20,7 @@ public class CategoryService {
 
     public Category findCategoryById(String userName, Long id){
         return categoryRepository.findById(id).map(category -> {
-            if(category.getUserName().equals(userName)){
+            if(category.getUser().getUserName().equals(userName)){
                 return category;
             }
             return null;
@@ -29,15 +29,15 @@ public class CategoryService {
     }
 
     public Category createCategory(String userName, Category categoryNew){
-        categoryNew.setUserName(userName);
+        categoryNew.getUser().setUserName(userName);
         return categoryRepository.save(categoryNew);
     }
 
     public Category updateCategory(String userName, Long id, Category categoryNew){
-        categoryNew.setUserName(userName);
+        categoryNew.getUser().setUserName(userName);
         categoryNew.setId(id);
         return categoryRepository.findById(id).map(category -> {
-            if(category.getUserName().equals(userName)){
+            if(category.getUser().getUserName().equals(userName)){
                 category.setName(categoryNew.getName());
                 return categoryRepository.save(category);
             }
@@ -47,7 +47,7 @@ public class CategoryService {
 
     public boolean deleteCategory(Long id, String userName){
         return categoryRepository.findById(id).map(category -> {
-            if (category.getUserName().equals(userName)){
+            if (category.getUser().getUserName().equals(userName)){
                 categoryRepository.deleteById(id);
                 return true;}
             return false;
