@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "habit")
 public class Habit {
 
     @Id
@@ -32,6 +33,30 @@ public class Habit {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -52,28 +77,11 @@ public class Habit {
         this.endTime = endTime;
     }
 
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
 }

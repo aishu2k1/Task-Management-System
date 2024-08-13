@@ -15,21 +15,29 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
     public List<Category> getCategories(String userName){
-        return categoryRepository.findByUserOrNoUser(userName);
+        return categoryRepository.findByUsername(userName);
     }
 
-    public Category findCategoryById(Long id){
-        Optional<Category> category = categoryRepository.findById(id);
-        return category.orElse(null);
+    public Category findCategoryById(String userName, Long id){
+        return categoryRepository.findById(id).map(category -> {
+            if(category.getUserName().equals(userName)){
+                return category;
+            }
+            return null;
+        }
+        ).orElse(null);
     }
 
-    public Category createCategory(Category categoryNew){
+    public Category createCategory(String userName, Category categoryNew){
+        categoryNew.setUserName(userName);
         return categoryRepository.save(categoryNew);
     }
 
-    public Category updateCategory(Category categoryNew){
-        return categoryRepository.findById(categoryNew.getId()).map(category -> {
-            if(category.getUserName().equals(categoryNew.getUserName())){
+    public Category updateCategory(String userName, Long id, Category categoryNew){
+        categoryNew.setUserName(userName);
+        categoryNew.setId(id);
+        return categoryRepository.findById(id).map(category -> {
+            if(category.getUserName().equals(userName)){
                 category.setName(categoryNew.getName());
                 return categoryRepository.save(category);
             }

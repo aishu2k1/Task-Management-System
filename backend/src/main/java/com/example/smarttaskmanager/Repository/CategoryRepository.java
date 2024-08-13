@@ -10,6 +10,5 @@ import java.util.List;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-    @Query("SELECT c FROM Category c WHERE u.userName = :userName OR u IS NULL")
-    List<Category> findByUserOrNoUser(@Param("userName") String userName);
+    List<Category> findByUsername(String userName);
 }

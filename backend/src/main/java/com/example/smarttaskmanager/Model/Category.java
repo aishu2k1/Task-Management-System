@@ -1,20 +1,21 @@
 package com.example.smarttaskmanager.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "category")
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "categoryId")
     private Long id;
 
     private String name;
 
     //foreign key to user
+    @ManyToOne
+    @JoinColumn(name = "userName", referencedColumnName = "userName")
     private String userName;
 
     public String getName() {

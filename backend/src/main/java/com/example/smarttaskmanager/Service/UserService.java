@@ -3,7 +3,6 @@ package com.example.smarttaskmanager.Service;
 import com.example.smarttaskmanager.Model.User;
 import com.example.smarttaskmanager.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,26 +13,25 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     public User register(User user){
-        user.setPassWord(passwordEncoder.encode(user.getPassWord()));
         return userRepository.save(user);
     }
 
-    public User login(String userName){
-        Optional<User> user = userRepository.findById(userName);
-        //passwordEncoder.
-        return user.orElse(null);
+    public String login(String userName, User userInfo){
+        return userRepository.findById(userName).map( user -> {
+            if(user.getPassWord().equals(userInfo.getPassWord())){
+                return "Success";
+            }
+            return "Incorrect password";
+        }).orElse("Username not found");
     }
 
-    public User updatePassword(User userMod){
-        return userRepository.findById(userMod.getUserName()).map(user -> {
-            user.setUserName(userMod.getUserName());
-            user.setPassWord(userMod.getPassWord());
-            return userRepository.save(user);
-        }).orElse(null);
+    public String updatePassword(String userName, User userInfo){
+        return userRepository.findById(userName).map(user -> {
+            user.setPassWord(userInfo.getPassWord());
+            userRepository.save(user);
+            return "Success";
+        }).orElse("Username not found");
     }
 
     public boolean deleteUser(String userName){

@@ -1,11 +1,9 @@
 package com.example.smarttaskmanager.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "task")
 public class Task {
 
     @Id
@@ -16,10 +14,15 @@ public class Task {
 
     private String description;
 
-    private Category category;
+    //foreign key to category
+    @OneToOne
+    @JoinColumn(name = "categoryId", referencedColumnName = "categoryId")
+    private Long categoryId;
 
     //foreign key to user
-    private String userName;
+    @ManyToOne
+    @JoinColumn(name = "userName", referencedColumnName = "userName")
+    private User user;
 
     public Long getId() {
         return id;
@@ -33,12 +36,12 @@ public class Task {
         return description;
     }
 
-    public Category getCategory() {
-        return category;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public String getUserName() {
-        return userName;
+    public User getUser() {
+        return user;
     }
 
     public void setId(Long id) {
@@ -53,12 +56,12 @@ public class Task {
         this.description = description;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

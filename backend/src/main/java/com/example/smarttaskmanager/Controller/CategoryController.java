@@ -15,26 +15,32 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("/categories/{userName}")
+    @GetMapping("/users/{userName}/categories")
     public ResponseEntity<List<Category>> getAllCategories(@PathVariable String userName) {
         List<Category> categories = categoryService.getCategories(userName);
         return ResponseEntity.ok(categories);
     }
 
-    @PostMapping("/createCategory")
-    public ResponseEntity<Category> createCategory(@RequestBody Category categoryNew){
-        Category category = categoryService.createCategory(categoryNew);
+    @GetMapping("/users/{userName}/category/{id}")
+    public ResponseEntity<Category> findCategory(@PathVariable String userName, @PathVariable Long id){
+        Category category = categoryService.findCategoryById(userName, id);
         return ResponseEntity.ok(category);
     }
 
-    @PutMapping("/updateCategory")
-    public ResponseEntity<Category> updateCategory(@RequestBody Category categoryNew){
-        Category category = categoryService.updateCategory(categoryNew);
+    @PostMapping("/users/{userName}/createCategory")
+    public ResponseEntity<Category> createCategory(@PathVariable String userName, @RequestBody Category categoryNew){
+        Category category = categoryService.createCategory(userName, categoryNew);
         return ResponseEntity.ok(category);
     }
 
-    @DeleteMapping("/deleteCategory/{id}/{userName}")
-    public ResponseEntity<Void> deleteCategory(@RequestBody Long id, @RequestBody String userName){
+    @PutMapping("/users/{userName}/updateCategory/{id}")
+    public ResponseEntity<Category> updateCategory(@PathVariable String userName, @PathVariable Long id, @RequestBody Category categoryNew){
+        Category category = categoryService.updateCategory(userName, id, categoryNew);
+        return ResponseEntity.ok(category);
+    }
+
+    @DeleteMapping("/users/{userName}/deleteCategory/{id}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable String userName, @PathVariable Long id){
         boolean deleted = categoryService.deleteCategory(id, userName);
         if (deleted){
             return ResponseEntity.noContent().build();

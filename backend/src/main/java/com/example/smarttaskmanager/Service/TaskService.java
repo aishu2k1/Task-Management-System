@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -14,31 +13,42 @@ public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
 
-    public Task createTask(Task task){
+    public Task createTask(String userName, Task task){
+        task.setUserName(userName);
         return taskRepository.save(task);
     }
 
-    public Task findTaskById(Long id){
-        Optional<Task> task = taskRepository.findById(id);
-        return task.orElse(null);
-    }
-
-    public List<Task> getAllTasks(){
-        return taskRepository.findAll();
-    }
-
-    public Task updateTask(Long id, Task taskMod){
+    public Task findTaskById(Long id, String userName){
         return taskRepository.findById(id).map(task -> {
-            task.setName(taskMod.getName());
-            task.setDescription(taskMod.getDescription());
+            if(task.getUserName().equals(userName)){
+                return task;
+            }
+            return null;
+        }).orElse(null);
+    }
+
+    public List<Task> getTasksByUsername(String username){
+        return taskRepository.findAllByUsername(username).orElse(null);
+    }
+
+    public Task updateTask(Long id, String userName, Task taskMod){
+        return taskRepository.findById(id).map(task -> {
+            if(task.getUserName().equals(userName)){
+                task.setName(taskMod.getName());
+                task.setDescription(taskMod.getDescription());
+                task.setCategoryId(taskMod.getCategoryId());
+            }
             return taskRepository.save(task);
         }).orElse(null);
     }
 
-    public boolean deleteTask(Long id){
+    public boolean deleteTask(Long id, String userName){
         return taskRepository.findById(id).map(task -> {
-            taskRepository.deleteById(id);
-            return true;
+            if(task.getUserName().equals(userName)){
+                taskRepository.deleteById(id);
+                return true;
+            }
+            return false;
         }).orElse(false);
     }
 
