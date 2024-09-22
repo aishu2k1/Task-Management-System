@@ -14,14 +14,16 @@ public class Task {
 
     private String description;
 
+    private boolean status = false;
+
     //foreign key to category
     @OneToOne
-    @JoinColumn(name = "categoryId", referencedColumnName = "categoryId")
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
     //foreign key to user
     @ManyToOne
-    @JoinColumn(name = "userName", referencedColumnName = "userName")
+    @JoinColumn(name = "user_name", referencedColumnName = "user_name")
     private User user;
 
     public Long getId() {
@@ -34,6 +36,10 @@ public class Task {
 
     public String getDescription() {
         return description;
+    }
+
+    public boolean getStatus() {
+        return status;
     }
 
     public Category getCategory() {
@@ -54,6 +60,10 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public void setCategory(Category category) {

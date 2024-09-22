@@ -1,6 +1,7 @@
 package com.example.smarttaskmanager.Service;
 
 import com.example.smarttaskmanager.Model.Task;
+import com.example.smarttaskmanager.Model.User;
 import com.example.smarttaskmanager.Repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,9 @@ public class TaskService {
     private TaskRepository taskRepository;
 
     public Task createTask(String userName, Task task){
-        task.getUser().setUserName(userName);
+        User user = new User();
+        user.setUserName(userName);
+        task.setUser(user);
         return taskRepository.save(task);
     }
 
@@ -28,7 +31,7 @@ public class TaskService {
     }
 
     public List<Task> getTasksByUsername(String username){
-        return taskRepository.findAllByUsername(username).orElse(null);
+        return taskRepository.findAllByUser_UserName(username).orElse(null);
     }
 
     public Task updateTask(Long id, String userName, Task taskMod){
@@ -37,8 +40,9 @@ public class TaskService {
                 task.setName(taskMod.getName());
                 task.setDescription(taskMod.getDescription());
                 task.getCategory().setId(taskMod.getCategory().getId());
+                return taskRepository.save(task);
             }
-            return taskRepository.save(task);
+            return null;
         }).orElse(null);
     }
 
@@ -46,6 +50,16 @@ public class TaskService {
         return taskRepository.findById(id).map(task -> {
             if(task.getUser().getUserName().equals(userName)){
                 taskRepository.deleteById(id);
+                return true;
+            }
+            return false;
+        }).orElse(false);
+    }
+
+    public boolean completeTask(Long id, String userName) {
+        return taskRepository.findById(id).map(task -> {
+            if(task.getUser().getUserName().equals(userName)){
+                task.setStatus(true);
                 return true;
             }
             return false;

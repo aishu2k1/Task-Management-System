@@ -19,27 +19,27 @@ public class UserController {
         return ResponseEntity.ok(userNew);
     }
 
-    @PostMapping("/login/{userName}")
-    public ResponseEntity<String> login(@PathVariable String userName, @RequestBody User user){
-        String status = userService.login(userName, user);
+    @PostMapping("/login/{user_name}")
+    public ResponseEntity<String> login(@PathVariable String user_name, @RequestBody User user){
+        String status = userService.login(user_name, user);
         if(status.equals("Success")){
             return ResponseEntity.ok(status);
         }
         return ResponseEntity.status(401).body(status);
     }
 
-    @PutMapping("/passWord/{userName}")
-    public ResponseEntity<String> resetPassWord(@PathVariable String userName, @RequestBody User user){
-        String status = userService.updatePassword(userName, user);
+    @PutMapping("/passWord/{user_name}")
+    public ResponseEntity<String> resetPassWord(@PathVariable String user_name, @RequestBody User user){
+        String status = userService.updatePassword(user_name, user);
         if(status.equals("Success")){
             return ResponseEntity.ok(status);
         }
         return ResponseEntity.status(401).body(status);
     }
 
-    @DeleteMapping("/user/{userName}")
-    public ResponseEntity<String> deleteUser(@PathVariable String userName){
-        boolean deleted = userService.deleteUser(userName);
+    @DeleteMapping("/user/{user_name}")
+    public ResponseEntity<String> deleteUser(@PathVariable String user_name){
+        boolean deleted = userService.deleteUser(user_name);
         if (deleted){
             return ResponseEntity.noContent().build();
         }

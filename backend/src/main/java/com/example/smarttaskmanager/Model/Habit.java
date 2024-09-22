@@ -2,6 +2,7 @@ package com.example.smarttaskmanager.Model;
 
 import jakarta.persistence.*;
 
+import java.sql.Time;
 import java.util.Date;
 
 @Entity
@@ -21,14 +22,14 @@ public class Habit {
     private Date createdDate = new Date();
 
     @Temporal(TemporalType.TIME)
-    private Date startTime;
+    private Time startTime;
 
     @Temporal(TemporalType.TIME)
-    private Date endTime;
+    private Time endTime;
 
     //foreign key to user
     @ManyToOne
-    @JoinColumn(name = "userName", referencedColumnName = "userName")
+    @JoinColumn(name = "user_name", referencedColumnName = "user_name")
     private User user;
 
     public Long getId() {
@@ -47,11 +48,11 @@ public class Habit {
         return createdDate;
     }
 
-    public Date getStartTime() {
+    public Time getStartTime() {
         return startTime;
     }
 
-    public Date getEndTime() {
+    public Time getEndTime() {
         return endTime;
     }
 
@@ -71,11 +72,11 @@ public class Habit {
         this.description = description;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(Time startTime) {
         this.startTime = startTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(Time endTime) {
         this.endTime = endTime;
     }
 

@@ -15,33 +15,33 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("/users/{userName}/categories")
-    public ResponseEntity<List<Category>> getAllCategories(@PathVariable String userName) {
-        List<Category> categories = categoryService.getCategories(userName);
+    @GetMapping("/users/{user_name}/categories")
+    public ResponseEntity<List<Category>> getAllCategories(@PathVariable String user_name) {
+        List<Category> categories = categoryService.getCategories(user_name);
         return ResponseEntity.ok(categories);
     }
 
-    @GetMapping("/users/{userName}/category/{id}")
-    public ResponseEntity<Category> findCategory(@PathVariable String userName, @PathVariable Long id){
-        Category category = categoryService.findCategoryById(userName, id);
+    @GetMapping("/users/{user_name}/category/{id}")
+    public ResponseEntity<Category> findCategory(@PathVariable String user_name, @PathVariable Long id){
+        Category category = categoryService.findCategoryById(user_name, id);
         return ResponseEntity.ok(category);
     }
 
-    @PostMapping("/users/{userName}/createCategory")
-    public ResponseEntity<Category> createCategory(@PathVariable String userName, @RequestBody Category categoryNew){
-        Category category = categoryService.createCategory(userName, categoryNew);
+    @PostMapping("/users/{user_name}/category")
+    public ResponseEntity<Category> createCategory(@PathVariable String user_name, @RequestBody Category categoryNew){
+        Category category = categoryService.createCategory(user_name, categoryNew);
         return ResponseEntity.ok(category);
     }
 
-    @PutMapping("/users/{userName}/updateCategory/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable String userName, @PathVariable Long id, @RequestBody Category categoryNew){
-        Category category = categoryService.updateCategory(userName, id, categoryNew);
+    @PutMapping("/users/{user_name}/category/{id}")
+    public ResponseEntity<Category> updateCategory(@PathVariable String user_name, @PathVariable Long id, @RequestBody Category categoryNew){
+        Category category = categoryService.updateCategory(user_name, id, categoryNew);
         return ResponseEntity.ok(category);
     }
 
-    @DeleteMapping("/users/{userName}/deleteCategory/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable String userName, @PathVariable Long id){
-        boolean deleted = categoryService.deleteCategory(id, userName);
+    @DeleteMapping("/users/{user_name}/category/{id}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable String user_name, @PathVariable Long id){
+        boolean deleted = categoryService.deleteCategory(id, user_name);
         if (deleted){
             return ResponseEntity.noContent().build();
         }

@@ -8,14 +8,13 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "categoryId")
     private Long id;
 
     private String name;
 
     //foreign key to user
     @ManyToOne
-    @JoinColumn(name = "userName", referencedColumnName = "userName")
+    @JoinColumn(name = "user_name", referencedColumnName = "user_name")
     private User user;
 
     public String getName() {

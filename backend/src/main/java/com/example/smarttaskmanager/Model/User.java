@@ -8,13 +8,13 @@ import jakarta.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "appUser")
+@Table(name = "app_user")
 public class User {
 
     @Id
-    @Column(name = "userName")
+    @Column(name = "user_name")
     private String userName;
-    @Column(name = "passWord")
+    @Column(name = "pass_word")
     private String passWord;
 
     public String getUserName() {

@@ -10,5 +10,6 @@ import java.util.List;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-    List<Category> findByUsername(String userName);
+    List<Category> findByUser_UserName(String userName);
+    List<Category> findByUserIsNull();
 }
