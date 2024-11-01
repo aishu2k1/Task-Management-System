@@ -39,6 +39,7 @@ public class TaskService {
             if(task.getUser().getUserName().equals(userName)){
                 task.setName(taskMod.getName());
                 task.setDescription(taskMod.getDescription());
+                task.setStatus(taskMod.getStatus());
                 task.getCategory().setId(taskMod.getCategory().getId());
                 return taskRepository.save(task);
             }
@@ -50,16 +51,6 @@ public class TaskService {
         return taskRepository.findById(id).map(task -> {
             if(task.getUser().getUserName().equals(userName)){
                 taskRepository.deleteById(id);
-                return true;
-            }
-            return false;
-        }).orElse(false);
-    }
-
-    public boolean completeTask(Long id, String userName) {
-        return taskRepository.findById(id).map(task -> {
-            if(task.getUser().getUserName().equals(userName)){
-                task.setStatus(true);
                 return true;
             }
             return false;

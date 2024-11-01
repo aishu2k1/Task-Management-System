@@ -14,7 +14,7 @@ public class Task {
 
     private String description;
 
-    private boolean status = false;
+    private String status; // make this string: todo, inprogress, completed
 
     //foreign key to category
     @OneToOne
@@ -38,7 +38,7 @@ public class Task {
         return description;
     }
 
-    public boolean getStatus() {
+    public String getStatus() {
         return status;
     }
 
@@ -62,7 +62,7 @@ public class Task {
         this.description = description;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

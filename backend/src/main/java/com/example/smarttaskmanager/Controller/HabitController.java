@@ -22,7 +22,7 @@ public class HabitController {
         return ResponseEntity.ok(habitNew);
     }
 
-    @GetMapping("/users/{user_name}/habit/{id}")
+    @GetMapping("/users/{user_name}/habits/{id}")
     public ResponseEntity<Habit> findHabitById(@PathVariable Long id, @PathVariable String user_name) {
         Habit habit =  habitService.findHabitById(id, user_name);
         if(habit!=null) {
